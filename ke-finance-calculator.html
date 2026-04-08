@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KE Finance Calculator</title>
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --card:#121212;
+      --text:#f5f5f5;
+      --muted:#b8b8b8;
+      --gold:#d4af37;
+      --border:#2a2a2a;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      padding:24px;
+    }
+    .wrap{
+      max-width:960px;
+      margin:0 auto;
+      background:linear-gradient(180deg,#111,#0b0b0b);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:28px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    h1{
+      margin:0 0 8px;
+      font-size:32px;
+      line-height:1.1;
+    }
+    .sub{
+      color:var(--muted);
+      margin-bottom:24px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:24px;
+    }
+    .panel{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:20px;
+    }
+    .field{margin-bottom:18px}
+    label{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+    .value{
+      color:var(--gold);
+      white-space:nowrap;
+    }
+    input[type="range"]{
+      width:100%;
+      accent-color:var(--gold);
+    }
+    select{
+      width:100%;
+      background:#0e0e0e;
+      color:var(--text);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+      font-size:15px;
+    }
+    .result{
+      display:grid;
+      gap:14px;
+    }
+    .result-card{
+      background:#0f0f0f;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+    }
+    .k{
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:6px;
+    }
+    .v{
+      font-size:28px;
+      font-weight:800;
+      color:var(--gold);
+    }
+    .trust{
+      display:grid;
+      gap:8px;
+      margin-top:18px;
+      color:#eee;
+    }
+    .cta{
+      display:inline-block;
+      margin-top:18px;
+      background:var(--gold);
+      color:#111;
+      text-decoration:none;
+      font-weight:800;
+      padding:14px 18px;
+      border-radius:999px;
+    }
+    .note{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:16px;
+      line-height:1.5;
+    }
+    @media (max-width: 760px){
+      body{padding:12px}
+      .wrap{padding:18px}
+      .grid{grid-template-columns:1fr}
+      h1{font-size:26px}
+      .v{font-size:24px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Estimate Your Car Loan Repayments</h1>
+    <div class="sub">Adjust the sliders to find a repayment that suits your budget.</div>
+
+    <div class="grid">
+      <div class="panel">
+        <div class="field">
+          <label>
+            <span>Loan Amount</span>
+            <span class="value" id="loanAmountValue">$30,000</span>
+          </label>
+          <input id="loanAmount" type="range" min="5000" max="100000" step="500" value="30000" />
+        </div>
+
+        <div class="field">
+          <label>
+            <span>Interest Rate</span>
+            <span class="value" id="rateValue">10.99%</span>
+          </label>
+          <input id="rate" type="range" min="3" max="25" step="0.01" value="10.99" />
+        </div>
+
+        <div class="field">
+          <label>
+            <span>Loan Term</span>
+            <span class="value" id="termValue">5 years</span>
+          </label>
+          <input id="term" type="range" min="3" max="7" step="1" value="5" />
+        </div>
+
+        <div class="field">
+          <label>
+            <span>Balloon</span>
+            <span class="value" id="balloonValue">20%</span>
+          </label>
+          <input id="balloon" type="range" min="0" max="50" step="1" value="20" />
+        </div>
+
+        <div class="field">
+          <label for="frequency"><span>Repayment Frequency</span></label>
+          <select id="frequency">
+            <option value="52">Weekly</option>
+            <option value="26" selected>Fortnightly</option>
+            <option value="12">Monthly</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="result">
+          <div class="result-card">
+            <div class="k">Estimated Repayment</div>
+            <div class="v" id="repayment">$146.28</div>
+          </div>
+          <div class="result-card">
+            <div class="k">Balloon Amount</div>
+            <div class="v" id="balloonAmount">$6,000</div>
+          </div>
+          <div class="result-card">
+            <div class="k">Total Interest</div>
+            <div class="v" id="totalInterest">$8,388</div>
+          </div>
+        </div>
+
+        <div class="trust">
+          <div>✓ Same day approval available</div>
+          <div>✓ Dealer &amp; private sales</div>
+          <div>✓ No impact on your credit score</div>
+        </div>
+
+        <a class="cta" href="https://www.kefinance.net/" target="_blank" rel="noopener">Get Approved Now</a>
+
+        <div class="note">
+          This calculator provides an estimate only. Actual rates, fees and repayments may vary based on lender assessment.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const loanAmount = document.getElementById('loanAmount');
+    const rate = document.getElementById('rate');
+    const term = document.getElementById('term');
+    const balloon = document.getElementById('balloon');
+    const frequency = document.getElementById('frequency');
+
+    const fmtMoney = (n) => new Intl.NumberFormat('en-AU', {
+      style: 'currency',
+      currency: 'AUD',
+      maximumFractionDigits: 2
+    }).format(n);
+
+    const fmtMoney0 = (n) => new Intl.NumberFormat('en-AU', {
+      style: 'currency',
+      currency: 'AUD',
+      maximumFractionDigits: 0
+    }).format(n);
+
+    function calcRepayment(P, annualRate, years, paymentsPerYear, balloonPct){
+      const r = annualRate / 100 / paymentsPerYear;
+      const n = years * paymentsPerYear;
+      const B = P * balloonPct / 100;
+
+      if (r === 0) {
+        const repay = (P - B) / n;
+        return {repay, balloonAmount:B, totalInterest:0};
+      }
+
+      const pvBalloon = B / Math.pow(1 + r, n);
+      const repay = ((P - pvBalloon) * r) / (1 - Math.pow(1 + r, -n));
+      const totalPaid = repay * n + B;
+      const totalInterest = totalPaid - P;
+
+      return {repay, balloonAmount:B, totalInterest};
+    }
+
+    function render(){
+      const P = parseFloat(loanAmount.value);
+      const annualRate = parseFloat(rate.value);
+      const years = parseInt(term.value, 10);
+      const balloonPct = parseFloat(balloon.value);
+      const paymentsPerYear = parseInt(frequency.value, 10);
+
+      document.getElementById('loanAmountValue').textContent = fmtMoney0(P);
+      document.getElementById('rateValue').textContent = annualRate.toFixed(2) + '%';
+      document.getElementById('termValue').textContent = years + ' year' + (years > 1 ? 's' : '');
+      document.getElementById('balloonValue').textContent = balloonPct.toFixed(0) + '%';
+
+      const result = calcRepayment(P, annualRate, years, paymentsPerYear, balloonPct);
+
+      document.getElementById('repayment').textContent = fmtMoney(result.repay);
+      document.getElementById('balloonAmount').textContent = fmtMoney0(result.balloonAmount);
+      document.getElementById('totalInterest').textContent = fmtMoney0(result.totalInterest);
+    }
+
+    [loanAmount, rate, term, balloon, frequency].forEach(el => el.addEventListener('input', render));
+    render();
+  </script>
+</body>
+</html>
